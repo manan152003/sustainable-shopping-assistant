@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Sustainable Shopping Assistant",
+    "version": "1.0",
+    "description": "Evaluate product sustainability and suggest eco-friendly alternatives.",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon.png"
+    },
+    "permissions": ["activeTab", "scripting", "storage"],
+    "host_permissions": [
+      "https://www.amazon.com/*",
+      "https://www.flipkart.com/*"
+    ]
+  }
+  
