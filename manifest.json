@@ -7,7 +7,7 @@
       "default_popup": "popup.html",
       "default_icon": "icon.png"
     },
-    "permissions": ["activeTab", "scripting", "storage"],
+    "permissions": ["activeTab", "scripting", "storage", "http://localhost:5000/"],
     "host_permissions": [
       "https://www.amazon.com/*",
       "https://www.flipkart.com/*"

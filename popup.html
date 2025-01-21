@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sustainable Shopping Assistant</title>
-  <link rel="stylesheet" href="popup.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Shopping Assistant</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Product Details</h1>
-  <div id="content">
-    <p>Click "Scan Product" to get product details!</p>
-    <button id="scan-btn">Scan Product</button>
-  </div>
-  <script src="popup.js"></script>
+    <h1>Product Details</h1>
+    <div id="content">
+        <p>Click "Scan Product" to get product details!</p>
+        <button id="scan-btn">Scan Product</button>
+        
+        <div id="sustainability-info" style="display: none;">
+            <h3>Sustainability Score</h3>
+            <div id="score-display"></div>
+            <h3>Sustainability Features</h3>
+            <div id="features-list"></div>
+            <div id="sustainability-level"></div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
 </body>
 </html>
