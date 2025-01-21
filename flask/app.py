@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-from transformers import pipeline
-import torch
+from flask_cors import CORS # type: ignore
+from transformers import pipeline # type: ignore
+import torch # type: ignore
 
 app = Flask(__name__)
 CORS(app)  
