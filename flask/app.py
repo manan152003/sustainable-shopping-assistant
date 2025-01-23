@@ -2,14 +2,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS # type: ignore
 from transformers import pipeline # type: ignore
 import torch # type: ignore
+import logging
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 CORS(app)  
 
 # Initialize the zero-shot classification pipeline
 classifier = pipeline("zero-shot-classification",
-                     model="facebook/bart-large-mnli",
-                     device=0 if torch.cuda.is_available() else -1)
+                     model="valhalla/distilbart-mnli-12-1",
+                     device=-1)
 
 # Define sustainability categories
 SUSTAINABILITY_LABELS = [
@@ -21,12 +23,41 @@ SUSTAINABILITY_LABELS = [
     "plastic free",
     "fair trade",
     "carbon neutral",
+    "biodegradable",
+    "low water usage",
+    "renewable resources",
+    "zero waste",
+    "ethically sourced",
+    "compostable",
+    "clean energy",
+    "durable design",
+    "eco-friendly packaging",
+    "locally produced",
+    "vegan-friendly",
+    "green manufacturing",
+
+    # Negative labels
     "harmful to environment",
-    "non-recyclable"
+    "non-recyclable",
+    "high carbon footprint",
+    "single-use plastic",
+    "wasteful packaging",
+    "non-biodegradable",
+    "toxic materials",
+    "unethically sourced",
+    "high energy consumption",
+    "pollution causing",
+    "unsustainable practices",
+    "resource intensive",
+    "deforestation-causing",
+    "animal cruelty",
+    "ozone-depleting",
+    "hazardous chemicals"
 ]
 
 @app.route('/analyze', methods=['POST'])
 def analyze_sustainability():
+    logging.info(f"Received request: {request.json}")
     data = request.json
     text = data.get('description', '')
     
@@ -37,13 +68,13 @@ def analyze_sustainability():
     result = classifier(text, SUSTAINABILITY_LABELS, multi_label=True)
     
     # Calculate sustainability score
-    positive_labels = SUSTAINABILITY_LABELS[:-2]  # All except last two negative labels
-    negative_labels = SUSTAINABILITY_LABELS[-2:]   # Last two negative labels
+    positive_labels = SUSTAINABILITY_LABELS[:-15]  # All except last two negative labels
+    negative_labels = SUSTAINABILITY_LABELS[-15:]   # Last two negative labels
     
     # Get scores for positive and negative aspects
     scores = {label: score for label, score in zip(result['labels'], result['scores'])}
     
-    # Calculate weighted score (positive aspects contribute positively, negative ones negatively)
+    # Calculate weighted scores
     total_score = 0
     features = []
     
